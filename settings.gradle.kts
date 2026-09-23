@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "attack_checking"
+rootProject.name = "attack_Testing"
 include(":app")
  
