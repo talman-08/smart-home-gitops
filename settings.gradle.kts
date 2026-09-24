@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Attack shows here red!"
+rootProject.name = "Checke the Error in GitHub!"
 include(":app")
  
