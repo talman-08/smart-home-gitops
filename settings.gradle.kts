@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Checke the Error in GitHub!"
+rootProject.name = "Test and Modify!"
 include(":app")
  
