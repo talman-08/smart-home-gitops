@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Test Attacking!"
+rootProject.name = "Attack shows here red!"
 include(":app")
  
