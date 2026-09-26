@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Test!"
+rootProject.name = "Test has been done!"
 include(":app")
  
