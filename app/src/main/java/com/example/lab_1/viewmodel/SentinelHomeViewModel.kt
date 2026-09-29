@@ -77,7 +77,8 @@ class SentinelHomeViewModel : ViewModel() {
 
                 attack = SentinelUiState.SecurityAlert(
                     message = text,
-                    confidence = result.confidence
+                    confidence = result.confidence,
+                    prNumber = comment.prNumber ?: continue
                 )
 
                 break
@@ -86,5 +87,46 @@ class SentinelHomeViewModel : ViewModel() {
 
         _uiState.value =
             attack ?: SentinelUiState.Normal
+    }
+
+
+    fun forceReject(prNumber: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                repository.rejectPullRequest(
+                    owner = owner,
+                    repo = repo,
+                    prNumber = prNumber
+                )
+
+                // Check GitHub again after the PR is closed.
+                checkGitHub()
+
+            } catch (e: Exception) {
+                _uiState.value = SentinelUiState.Error(
+                    e.message ?: "Failed to reject pull request"
+                )
+            }
+        }
+    }
+
+    fun forceMerge(prNumber: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            try {
+                repository.forceMerge(
+                    owner = owner,
+                    repo = repo,
+                    prNumber = prNumber
+                )
+
+                // Check GitHub again after the transaction is complete.
+                checkGitHub()
+
+            } catch (e: Exception) {
+                _uiState.value = SentinelUiState.Error(
+                    e.message ?: "Failed to force merge pull request"
+                )
+            }
+        }
     }
 }

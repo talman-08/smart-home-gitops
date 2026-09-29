@@ -8,7 +8,8 @@ sealed class SentinelUiState {
 
     data class SecurityAlert(
         val message: String,
-        val confidence: Int
+        val confidence: Int,
+        val prNumber: Int
     ) : SentinelUiState()
 
     data class Error(

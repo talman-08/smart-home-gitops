@@ -16,7 +16,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-
             Lab_1Theme {
 
                 val sentinelViewModel: SentinelHomeViewModel = viewModel()
@@ -24,7 +23,13 @@ class MainActivity : ComponentActivity() {
                 val uiState by sentinelViewModel.uiState.collectAsState()
 
                 SentinelHomeScreen(
-                    uiState = uiState
+                    uiState = uiState,
+                    onForceReject = { prNumber ->
+                        sentinelViewModel.forceReject(prNumber)
+                    },
+                    onForceMerge = { prNumber ->
+                        sentinelViewModel.forceMerge(prNumber)
+                    }
                 )
             }
         }

@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -19,9 +20,10 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun SentinelHomeScreen(
-    uiState: SentinelUiState
+    uiState: SentinelUiState,
+    onForceReject: (Int) -> Unit,
+    onForceMerge: (Int) -> Unit
 ) {
-
     when (uiState) {
 
         SentinelUiState.Loading -> {
@@ -35,7 +37,10 @@ fun SentinelHomeScreen(
         is SentinelUiState.SecurityAlert -> {
             SecurityAlertScreen(
                 message = uiState.message,
-                confidence = uiState.confidence
+                confidence = uiState.confidence,
+                prNumber = uiState.prNumber,
+                onForceReject = onForceReject,
+                onForceMerge = onForceMerge
             )
         }
 
@@ -49,7 +54,6 @@ fun SentinelHomeScreen(
 
 @Composable
 private fun LoadingScreen() {
-
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
@@ -60,19 +64,16 @@ private fun LoadingScreen() {
 
 @Composable
 private fun NormalScreen() {
-
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFF2E7D32)),
         contentAlignment = Alignment.Center
     ) {
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-
             Text(
                 text = "SYSTEM NORMAL",
                 color = Color.White,
@@ -92,20 +93,20 @@ private fun NormalScreen() {
 @Composable
 private fun SecurityAlertScreen(
     message: String,
-    confidence: Int
+    confidence: Int,
+    prNumber: Int,
+    onForceReject: (Int) -> Unit,
+    onForceMerge: (Int) -> Unit
 ) {
-
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color(0xFFB71C1C))
             .padding(24.dp)
     ) {
-
         Column(
             modifier = Modifier.align(Alignment.Center)
         ) {
-
             Text(
                 text = "SECURITY ALERT",
                 color = Color.White,
@@ -132,6 +133,24 @@ private fun SecurityAlertScreen(
                 color = Color.White,
                 modifier = Modifier.padding(top = 8.dp)
             )
+
+            Button(
+                onClick = {
+                    onForceMerge(prNumber)
+                },
+                modifier = Modifier.padding(top = 24.dp)
+            ) {
+                Text("Force Merge")
+            }
+
+            Button(
+                onClick = {
+                    onForceReject(prNumber)
+                },
+                modifier = Modifier.padding(top = 12.dp)
+            ) {
+                Text("Force Reject")
+            }
         }
     }
 }
@@ -140,16 +159,13 @@ private fun SecurityAlertScreen(
 private fun ErrorScreen(
     message: String
 ) {
-
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-
         Column(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             Text(
                 text = "Connection Error",
                 color = MaterialTheme.colorScheme.error,
