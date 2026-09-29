@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Lab 2 Force Reject test!"
+rootProject.name = "Lab 2 Force Reject test now available!"
 include(":app")
  
