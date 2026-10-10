@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Lab 2 Force Merge!"
+rootProject.name = "Lab 2 Force Force Force"
 include(":app")
  
