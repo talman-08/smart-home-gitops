@@ -22,6 +22,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Lab 2 Force Force Force"
+rootProject.name = "lab_2 test"
 include(":app")
  
